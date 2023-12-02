@@ -45,4 +45,8 @@ tile_data = PoolIntArray( -196607, 0, 0, -196606, 0, 0, -196605, 0, 0, -196604, 
 [node name="Player" parent="GameField/TileMap" instance=ExtResource( 4 )]
 position = Vector2( 205, 73 )
 
+[node name="TileMap2" type="TileMap" parent="GameField"]
+centered_textures = true
+format = 1
+
 [connection signal="gui_input" from="HUDCanvasLayer/TouchScreenControl" to="HUDCanvasLayer/TouchScreenControl" method="_input"]
