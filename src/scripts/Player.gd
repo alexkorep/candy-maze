@@ -47,9 +47,8 @@ func _physics_process(delta):
 			return
 		var map_pos = world_to_map(position)
 		var target_map_pos = map_pos + direction
-		#print("target_map_pos: ", target_map_pos, "tile_id: ", tile_map.get_cellv(target_map_pos))
+
 		if not can_move_to(target_map_pos):
-			print("Can't move there")
 			return
 
 		var target_world_pos = map_to_world(target_map_pos)
@@ -63,5 +62,4 @@ func start_movement(target_pos):
 
 func can_move_to(pos):
 	var tile_id = tile_map.get_cellv(pos)
-	print("tile_id: ", tile_id)
 	return tile_id == -1
