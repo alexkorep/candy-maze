@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/PlayerTween.gd" type="Script" id=1]
-[ext_resource path="res://assets/sprites/keycubes.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/box01.png" type="Texture" id=2]
 [ext_resource path="res://scripts/Box.gd" type="Script" id=3]
 
 [node name="Keycube" type="Node2D"]
@@ -10,5 +10,4 @@ script = ExtResource( 3 )
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -1, 78 )
 texture = ExtResource( 2 )
-hframes = 4
 script = ExtResource( 1 )

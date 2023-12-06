@@ -2,14 +2,15 @@ extends TileMap
 
 var tile_map_text = """
 11111111
-1 b    1
+1 b  x 1
 1  111 1
-1 b   p1
+1 b x p1
 11111111
 """
 
 var wall_tile_id = 0  # The ID of the wall tile in your tileset
-var player_tile_id = 1  # The ID of the player tile in your tileset
+var floor_tile_id = 1  # The ID of the floor tile in your tileset
+var box_target_tile_id = 2  # The ID of the box target tile in your tileset
 var box_scene = load("res://scenes/Box.tscn")  # Load the Keycube scene
 
 onready var tile_map = self  # Assuming you have a TileMap node named "TileMap"
@@ -27,14 +28,25 @@ func load_tile_map_from_text(text):
 		for x in range(line.length()):
 			var c = line[x]
 			if c == '1':
+				# Wall
 				tile_map.set_cell(x, y, wall_tile_id)
 				GameLogic.level_state.walls.append(Vector2(x, y))
+			if c == ' ':
+				# Floor
+				tile_map.set_cell(x, y, floor_tile_id)
+			if c == 'x':
+				# Target
+				tile_map.set_cell(x, y, box_target_tile_id)
+				GameLogic.level_state.targets.append(Vector2(x, y))
 			elif c == 'p':
+				# Player
 				player.position = tile_map.map_to_world(Vector2(x, y))  # Set the player's position
 				GameLogic.level_state.player.current = Vector2(x, y)
 				GameLogic.level_state.player.previous = Vector2(x, y)
 				GameLogic.level_state.player.intermediate = Vector2(x, y)
+				tile_map.set_cell(x, y, floor_tile_id)
 			elif c == 'b':
+				# Box
 				var box_instance = box_scene.instance()  # Create an instance of the Keycube scene
 				box_instance.position = tile_map.map_to_world(Vector2(x, y))  # Set the instance's position
 				box_instance.idx = box_idx
@@ -45,3 +57,4 @@ func load_tile_map_from_text(text):
 					"previous": Vector2(x, y),
 					"intermediate": Vector2(x, y)
 				})
+				tile_map.set_cell(x, y, floor_tile_id)
