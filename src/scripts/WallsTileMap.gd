@@ -3,9 +3,14 @@ extends TileMap
 var tile_map_text = """
 11111111
 1      1
-1  111 1
-1 x b p1
-11111111
+1  111 11111
+1 x b p1   1
+1 111111   1
+1          1
+1 1111111  1
+1 x  b   b 1
+1   x b x  1
+111111111111
 """
 
 var wall_tile_id = 0  # The ID of the wall tile in your tileset
