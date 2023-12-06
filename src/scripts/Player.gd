@@ -54,6 +54,16 @@ func _physics_process(delta):
 		var target_world_pos = map_to_world(target_map_pos)
 		start_movement(target_world_pos)
 
+		# Move the keycube if there's one in the next tile
+		# var next_tile = tile_map.world_to_map(position + direction * tile_map.cell_size)
+		# if tile_map.get_cellv(next_tile) == -1:  # If the next tile is not a wall
+		# 	for child in tile_map.get_children():
+		# 		if child is Keycube and tile_map.world_to_map(child.position) == next_tile:  # If there's a keycube in the next tile
+		# 			var next_keycube_tile = next_tile + direction
+		# 			if tile_map.get_cellv(next_keycube_tile) == -1:  # If the next keycube tile is not a wall
+		# 				child.position = tile_map.map_to_world(next_keycube_tile)  # Move the keycube
+
+
 func start_movement(target_pos):
 	start_position = position
 	end_position = target_pos

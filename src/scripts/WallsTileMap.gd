@@ -2,9 +2,9 @@ extends TileMap
 
 var tile_map_text = """
 11111111
-1      1
+1 b    1
 1  111 1
-1     p1
+1 b   p1
 11111111
 """
 
