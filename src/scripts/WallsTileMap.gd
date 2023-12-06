@@ -21,6 +21,7 @@ func _ready():
 func load_tile_map_from_text(text):
 	tile_map.clear()  # This clears all tiles from the TileMap
 	var lines = text.split("\n")
+	var box_idx = 0
 	for y in range(lines.size()):
 		var line = lines[y]
 		for x in range(line.length()):
@@ -36,6 +37,8 @@ func load_tile_map_from_text(text):
 			elif c == 'b':
 				var box_instance = box_scene.instance()  # Create an instance of the Keycube scene
 				box_instance.position = tile_map.map_to_world(Vector2(x, y))  # Set the instance's position
+				box_instance.idx = box_idx
+				box_idx += 1
 				tile_map.add_child(box_instance)  # Add the instance as a child of the tilemap
 				GameLogic.level_state.boxes.append({
 					"current": Vector2(x, y),

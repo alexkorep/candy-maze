@@ -5,7 +5,7 @@ var level_state = {
 	'player': { 'current': Vector2.ZERO, 'previous': Vector2.ZERO },
 	'boxes': [],
 	'targets': [],
-  'move_timer': 0.0,
+	'move_timer': 0.0,
 }
 
 # Move duration in seconds
@@ -44,6 +44,10 @@ func move(direction):
 func on_physics_process(delta):
 	if level_state.move_timer < move_duration:
 		level_state.move_timer += delta
+	else:
+		level_state.player.previous = level_state.player.current
+		for box in level_state.boxes:
+			box.previous = box.current
 
 func is_level_complete():
 	for box in level_state['boxes']:
