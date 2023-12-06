@@ -11,9 +11,12 @@ var level_state = {
 # Move duration in seconds
 var move_duration = 1.0
 
-func on_ready():
+func reset():
 	# Initialize the level state here
-	pass
+	level_state.move_timer = 0
+	level_state.boxes = []
+	level_state.walls = []
+	level_state.targets = []
 
 func can_move(direction):
 	if level_state.move_timer < move_duration:
@@ -50,6 +53,10 @@ func on_physics_process(delta):
 			box.previous = box.current
 
 func is_level_complete():
+	if level_state.move_timer < move_duration:
+		# Wait until the player has finished moving
+		return false
+
 	for box in level_state['boxes']:
 		if not (box['current'] in level_state['targets']):
 			return false

@@ -2,9 +2,9 @@ extends TileMap
 
 var tile_map_text = """
 11111111
-1 b  x 1
+1      1
 1  111 1
-1 b x p1
+1 x b p1
 11111111
 """
 
@@ -21,6 +21,11 @@ func _ready():
 
 func load_tile_map_from_text(text):
 	tile_map.clear()  # This clears all tiles from the TileMap
+	tile_map.get_children().clear()  # This clears all children from the TileMap
+	var player = load("res://scenes/Player.tscn").instance()  # Create an instance of the Player scene
+	tile_map.add_child(player)  # Add the player as a child of the tilemap
+	GameLogic.reset()
+
 	var lines = text.split("\n")
 	var box_idx = 0
 	for y in range(lines.size()):

@@ -16,6 +16,9 @@ func map_begin_end_progress_to_world(begin, end, progress):
 
 func _physics_process(delta):
 	GameLogic.on_physics_process(delta)
+	if GameLogic.is_level_complete():
+		get_tree().change_scene("res://scenes/LevelSolved.tscn")
+
 	var player_state = GameLogic.level_state.player
 	var progress = GameLogic.level_state.move_timer / GameLogic.move_duration
 	position = map_begin_end_progress_to_world(
