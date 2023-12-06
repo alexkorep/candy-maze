@@ -33,6 +33,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Utils="*res://scripts/Utils.gd"
+GameLogic="*res://scripts/GameLogic.gd"
 
 [display]
 
