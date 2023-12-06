@@ -2,20 +2,21 @@ extends Node
 
 var level_state = {
 	'walls': [],
-	'player': { 'current': Vector2.ZERO, 'previous': Vector2.ZERO, 'intermediate': Vector2.ZERO },
+	'player': { 'current': Vector2.ZERO, 'previous': Vector2.ZERO },
 	'boxes': [],
-	'targets': []
+	'targets': [],
+  'move_timer': 0.0,
 }
 
+# Move duration in seconds
 var move_duration = 1.0
-var move_timer = 0.0
 
 func on_ready():
 	# Initialize the level state here
 	pass
 
 func can_move(direction):
-	if move_timer < move_duration:
+	if level_state.move_timer < move_duration:
 		return false
 	var next_pos = level_state['player']['current'] + direction
 	if next_pos in level_state['walls']:
@@ -32,7 +33,7 @@ func can_move(direction):
 
 func move(direction):
 	if can_move(direction):
-		move_timer = 0.0
+		level_state.move_timer = 0.0
 		level_state['player']['previous'] = level_state['player']['current']
 		level_state['player']['current'] += direction
 		for box in level_state['boxes']:
@@ -41,12 +42,8 @@ func move(direction):
 				box['current'] += direction
 
 func on_physics_process(delta):
-	if move_timer < move_duration:
-		move_timer += delta
-		var t = move_timer / move_duration
-		level_state['player']['intermediate'] = level_state['player']['previous'].linear_interpolate(level_state['player']['current'], t)
-		for box in level_state['boxes']:
-			box['intermediate'] = box['previous'].linear_interpolate(box['current'], t)
+	if level_state.move_timer < move_duration:
+		level_state.move_timer += delta
 
 func is_level_complete():
 	for box in level_state['boxes']:

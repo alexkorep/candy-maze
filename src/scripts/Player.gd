@@ -1,75 +1,42 @@
 extends Node2D
 
-# Movement duration
-var move_duration = 0.5  # Duration in seconds to move from one cell to another
-var is_moving = false
-var start_position = Vector2()
-var end_position = Vector2()
-var move_timer = 0.0
-
 var tile_map: TileMap
 
 func _ready():
 	tile_map = get_parent()  # Ensure the parent is a TileMap
 
 func world_to_map(pos):
-	return tile_map.world_to_map(pos) #+ tile_map.cell_size / 2)
+	return tile_map.world_to_map(pos)
 
 func map_to_world(map_pos):
-	return tile_map.map_to_world(map_pos)# - tile_map.cell_size / 2
+	return tile_map.map_to_world(map_pos)
+
+func map_begin_end_progress_to_world(begin, end, progress):
+	return map_to_world(begin) + (map_to_world(end) - map_to_world(begin)) * progress
 
 func _physics_process(delta):
-	if is_moving:
-		# Update the movement timer
-		move_timer += delta
+	GameLogic.on_physics_process(delta)
+	var player_state = GameLogic.level_state.player
+	var progress = GameLogic.level_state.move_timer / GameLogic.move_duration
+	position = map_begin_end_progress_to_world(
+		player_state.previous,
+		player_state.current,
+		progress)
 
-		# Calculate the current position
-		var t = min(move_timer / move_duration, 1.0)
-		position = start_position.linear_interpolate(end_position, t)
+	var direction = Vector2.ZERO
 
-		# Check if the movement is complete
-		if t >= 1.0:
-			is_moving = false
-			position = end_position  # Ensure we end exactly at the end position
-	elif not is_moving:
-		var direction = Vector2.ZERO
+	if Input.is_action_just_pressed("move_left"):
+		direction = Vector2(-1, 0)
+	elif Input.is_action_just_pressed("move_right"):
+		direction = Vector2(1, 0)
+	elif Input.is_action_just_pressed("move_up"):
+		direction = Vector2(0, -1)
+	elif Input.is_action_just_pressed("move_down"):
+		direction = Vector2(0, 1)
 
-		if Input.is_action_just_pressed("move_left"):
-			direction = Vector2(-1, 0)
-		elif Input.is_action_just_pressed("move_right"):
-			direction = Vector2(1, 0)
-		elif Input.is_action_just_pressed("move_up"):
-			direction = Vector2(0, -1)
-		elif Input.is_action_just_pressed("move_down"):
-			direction = Vector2(0, 1)
+	if direction == Vector2.ZERO:
+		return
 
-		if direction == Vector2.ZERO:
-			return
-		var map_pos = world_to_map(position)
-		var target_map_pos = map_pos + direction
+	if GameLogic.can_move(direction):
+		GameLogic.move(direction)
 
-		if not can_move_to(target_map_pos):
-			return
-
-		var target_world_pos = map_to_world(target_map_pos)
-		start_movement(target_world_pos)
-
-		# Move the keycube if there's one in the next tile
-		# var next_tile = tile_map.world_to_map(position + direction * tile_map.cell_size)
-		# if tile_map.get_cellv(next_tile) == -1:  # If the next tile is not a wall
-		# 	for child in tile_map.get_children():
-		# 		if child is Keycube and tile_map.world_to_map(child.position) == next_tile:  # If there's a keycube in the next tile
-		# 			var next_keycube_tile = next_tile + direction
-		# 			if tile_map.get_cellv(next_keycube_tile) == -1:  # If the next keycube tile is not a wall
-		# 				child.position = tile_map.map_to_world(next_keycube_tile)  # Move the keycube
-
-
-func start_movement(target_pos):
-	start_position = position
-	end_position = target_pos
-	move_timer = 0.0
-	is_moving = true
-
-func can_move_to(pos):
-	var tile_id = tile_map.get_cellv(pos)
-	return tile_id == -1
