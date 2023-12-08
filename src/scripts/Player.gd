@@ -5,9 +5,6 @@ var tile_map: TileMap
 func _ready():
 	tile_map = get_parent()  # Ensure the parent is a TileMap
 
-func world_to_map(pos):
-	return tile_map.world_to_map(pos)
-
 func map_to_world(map_pos):
 	return tile_map.map_to_world(map_pos)
 
@@ -24,7 +21,7 @@ func _physics_process(delta):
 	position = map_begin_end_progress_to_world(
 		player_state.previous,
 		player_state.current,
-		progress)
+		progress) + Vector2(0, 64)
 
 	var direction = Vector2.ZERO
 
