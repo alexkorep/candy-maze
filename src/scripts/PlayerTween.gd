@@ -1,22 +1,21 @@
 extends Sprite
 
-signal abcd()
 
-var start_position: Vector2
-var end_position: Vector2
-var duration: float = 2
+export var start_position: Vector2
+export var end_position: Vector2
+export var duration: float = 0.4
+export var start_scale: Vector2
+export var end_scale: Vector2
 
 func _ready():
-	pass
-	# start_position = self.position
-	# end_position = start_position + Vector2(0, 100)  # Adjust the Y value for the movement range
-	# var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
-	# tween.tween_property(self, "position", end_position, duration)
-	# tween.connect("tween_completed", self, "_on_Tween_completed", [tween])
-	#tween.set_repeat(-1)  # Set the tween to repeat indefinitely
+	if end_scale != start_scale:
+		var tween_scale = create_tween().set_trans(Tween.TRANS_SINE)
+		tween_scale.tween_property(self, "scale", end_scale, duration)
+		tween_scale.tween_property(self, "scale", start_scale, duration)
+		tween_scale.set_loops(0)
 
-func _on_Tween_completed(tween):
-	print("Tween completed")
-	self.position = start_position  # Reset the position to the start position
-	tween.tween_property(self, "position", start_position, duration)  # Start the tween again
-	emit_signal("abcd")
+	if end_position != start_position:
+		var tween_position = create_tween().set_trans(Tween.TRANS_SINE)
+		tween_position.tween_property(self, "position", end_position, duration)
+		tween_position.tween_property(self, "position", start_position, duration)
+		tween_position.set_loops(0)

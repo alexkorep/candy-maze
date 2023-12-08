@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
+[ext_resource path="res://scripts/PlayerTween.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/cloud01.png" type="Texture" id=2]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=4]
 
@@ -11,6 +12,12 @@ position = Vector2( 0, -22 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 hframes = 4
+script = ExtResource( 1 )
+start_position = Vector2( 0, -22 )
+end_position = Vector2( 0, -32 )
+duration = 0.8
+start_scale = Vector2( 0.5, 0.5 )
+end_scale = Vector2( 0.52, 0.52 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
