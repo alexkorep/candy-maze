@@ -1,6 +1,7 @@
 extends Node2D
 
 var tile_map: TileMap
+onready var sprite = $Sprite
 
 func _ready():
 	tile_map = get_parent()  # Ensure the parent is a TileMap
@@ -24,18 +25,22 @@ func _physics_process(delta):
 		progress) + Vector2(0, 64)
 
 	var direction = Vector2.ZERO
-
+	var sprite_frame = 0
 	if Input.is_action_just_pressed("move_left"):
 		direction = Vector2(-1, 0)
+		sprite_frame = 2
 	elif Input.is_action_just_pressed("move_right"):
 		direction = Vector2(1, 0)
+		sprite_frame = 1
 	elif Input.is_action_just_pressed("move_up"):
 		direction = Vector2(0, -1)
+		sprite_frame = 2
 	elif Input.is_action_just_pressed("move_down"):
 		direction = Vector2(0, 1)
-
+		sprite_frame = 0
 	if direction == Vector2.ZERO:
 		return
+	sprite.frame = sprite_frame
 
 	if GameLogic.can_move(direction):
 		GameLogic.move(direction)

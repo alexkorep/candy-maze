@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://scripts/PlayerTween.gd" type="Script" id=1]
+[ext_resource path="res://scripts/SpriteTweenAnimation.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/cloud01.png" type="Texture" id=2]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=4]
 
@@ -21,4 +21,5 @@ end_scale = Vector2( 0.52, 0.52 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
+zoom = Vector2( 2, 2 )
 smoothing_enabled = true
