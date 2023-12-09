@@ -1,17 +1,17 @@
 extends Node
 
-var is_mouse_pressed = false
+var last_direction = Vector2.ZERO
 
 func _input(event):
-	if event is InputEventMouseButton:
-		is_mouse_pressed = event.pressed
-	elif event is InputEventScreenDrag or (event is InputEventMouseMotion and is_mouse_pressed):
-		var direction = event.relative.normalized()
-		if direction.x > 0 and direction.y < 0:
+	if event is InputEventScreenDrag:
+		last_direction = event.relative.normalized()
+	elif event is InputEventScreenTouch and not event.pressed:
+		if last_direction.x > 0 and last_direction.y < 0:
 			Input.action_press('move_up')
-		elif direction.x > 0 and direction.y > 0:
+		elif last_direction.x > 0 and last_direction.y > 0:
 			Input.action_press('move_right')
-		elif direction.x < 0 and direction.y < 0:
+		elif last_direction.x < 0 and last_direction.y < 0:
 			Input.action_press('move_left')
-		elif direction.x < 0 and direction.y > 0:
+		elif last_direction.x < 0 and last_direction.y > 0:
 			Input.action_press('move_down')
+
