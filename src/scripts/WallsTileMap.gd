@@ -10,6 +10,7 @@ var player_scene = load("res://scenes/Player.tscn")
 
 onready var tile_map = self  # Assuming you have a TileMap node named "TileMap"
 onready var player = $Player  # Assuming you have a Player node named "Player"
+onready var LevelComplete = $"../../HUDCanvasLayer/LevelComplete"
 
 func _ready():
 	var level_no = GameLogic.current_level_no
@@ -66,9 +67,13 @@ func load_tile_map_from_text(text):
 
 func _physics_process(delta):
 	if GameLogic.is_level_complete():
-		GameLogic.reset()
-		if GameLogic.next_level():
-			get_tree().reload_current_scene()
-		else:
-			get_tree().change_scene("res://scenes/LevelSolved.tscn")
-				
+		LevelComplete.visible = true
+		
+
+func _on_LevelComplete_confirmed():
+	print("111")
+	GameLogic.reset()
+	if GameLogic.next_level():
+		get_tree().reload_current_scene()
+	else:
+		get_tree().change_scene("res://scenes/LevelSolved.tscn")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://tilesets/walls_tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://scripts/Main.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/sprites/background05.png" type="Texture" id=5]
 [ext_resource path="res://scenes/Box.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scripts/WallsTileMap.gd" type="Script" id=7]
+[ext_resource path="res://scenes/LevelCompletePopup.tscn" type="PackedScene" id=8]
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
@@ -18,6 +19,8 @@ script = ExtResource( 2 )
 [node name="TouchScreenControl" parent="HUDCanvasLayer" instance=ExtResource( 3 )]
 
 [node name="HUD" parent="HUDCanvasLayer" instance=ExtResource( 3 )]
+
+[node name="LevelComplete" parent="HUDCanvasLayer" instance=ExtResource( 8 )]
 visible = false
 
 [node name="GameField" type="Control" parent="."]
@@ -50,11 +53,14 @@ position = Vector2( 265, 145 )
 [node name="Keycube3" parent="GameField/WallsTileMap" instance=ExtResource( 6 )]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+scale = Vector2( 2, 2 )
+transform = Transform2D( 2, 0, 0, 2, 0, 0 )
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-scale = Vector2( 2, 2 )
 motion_scale = Vector2( 0.1, 0.1 )
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2( 13, 3 )
+position = Vector2( -84, -116 )
 texture = ExtResource( 5 )
+
+[connection signal="confirmed" from="HUDCanvasLayer/LevelComplete" to="GameField/WallsTileMap" method="_on_LevelComplete_confirmed"]
