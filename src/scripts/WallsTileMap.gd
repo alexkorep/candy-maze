@@ -5,7 +5,8 @@ extends TileMap
 var wall_tile_id = 0  # The ID of the wall tile in your tileset
 var floor_tile_id = 1  # The ID of the floor tile in your tileset
 var box_target_tile_id = 2  # The ID of the box target tile in your tileset
-var box_scene = load("res://scenes/Box.tscn")  # Load the Keycube scene
+var box_scene = load("res://scenes/Box.tscn")
+var player_scene = load("res://scenes/Player.tscn")
 
 onready var tile_map = self  # Assuming you have a TileMap node named "TileMap"
 onready var player = $Player  # Assuming you have a Player node named "Player"
@@ -16,10 +17,13 @@ func _ready():
 	load_tile_map_from_text(level_text)
 
 func load_tile_map_from_text(text):
-	tile_map.clear()  # This clears all tiles from the TileMap
-	tile_map.get_children().clear()  # This clears all children from the TileMap
-	var player = load("res://scenes/Player.tscn").instance()  # Create an instance of the Player scene
-	tile_map.add_child(player)  # Add the player as a child of the tilemap
+	tile_map.clear()
+	# Delete all child nodes
+	for child in tile_map.get_children():
+		tile_map.remove_child(child)
+
+	var player = player_scene.instance()
+	tile_map.add_child(player)
 	GameLogic.reset()
 
 	var lines = text.split("\n")
@@ -59,3 +63,12 @@ func load_tile_map_from_text(text):
 					"intermediate": Vector2(x, y)
 				})
 				tile_map.set_cell(x, y, floor_tile_id)
+
+func _physics_process(delta):
+	if GameLogic.is_level_complete():
+		GameLogic.reset()
+		if GameLogic.next_level():
+			get_tree().reload_current_scene()
+		else:
+			get_tree().change_scene("res://scenes/LevelSolved.tscn")
+				

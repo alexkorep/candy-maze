@@ -10,10 +10,5 @@ func _ready():
 	$LevelLabel.text = 'Level ' + str(level_number + 1)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-
 func _on_TextureButton_pressed():
 	emit_signal("on_level_selected", level_number)

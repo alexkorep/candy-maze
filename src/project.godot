@@ -38,6 +38,8 @@ GameLogic="*res://scripts/GameLogic.gd"
 [display]
 
 window/size/width=480
+window/size/resizable=false
+window/handheld/orientation="portrait"
 
 [editor_plugins]
 

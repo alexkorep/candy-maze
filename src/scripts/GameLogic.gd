@@ -1,7 +1,25 @@
 extends Node
 
 var current_level_no: int = 0
-var level_texts = ["""
+var level_texts = [
+# 0
+"""
+    1111
+11111  1
+1x b  p1
+11111  1
+    1111
+""",
+
+#1
+"""
+1111
+1 p1
+1111
+""",
+	
+# 2
+"""
 11111111
 1      1
 1  111 11111
@@ -23,7 +41,7 @@ var level_state = {
 }
 
 # Move duration in seconds
-var move_duration = 1.0
+var move_duration = 0.25
 
 func reset():
 	# Initialize the level state here
@@ -74,4 +92,12 @@ func is_level_complete():
 	for box in level_state['boxes']:
 		if not (box['current'] in level_state['targets']):
 			return false
+	return true
+
+func next_level():
+	""" Returns true if there is a next level, false otherwise """
+	current_level_no += 1
+	if current_level_no >= len(level_texts):
+		current_level_no = 0
+		return false
 	return true
