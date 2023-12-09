@@ -1,5 +1,7 @@
 extends Node2D
 
+# Use https://alliballibaba.github.io/Sokoban-Level-Generator/ to generate the levels
+
 # Enum with tile types
 enum TileTypes {
 	PLAYER = 0
@@ -8,11 +10,6 @@ enum TileTypes {
 	FLOOR = 3
 	TARGET = 4
 }
-
-# func get_block(level_no: int, x: int, y: int):
-# 	var tile_map = get_child(level_no)
-# 	var tile = tile_map.get_cell(x, y)
-# 	return tile
 
 func get_level_cells(level_no: int):
 	var tile_map = get_child(level_no)
