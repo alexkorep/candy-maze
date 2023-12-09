@@ -1,11 +1,9 @@
 extends Node
 
 var current_level_no: int = 0
+var total_level_count = 0
 
 # Load LevelTexts.gd file
-var LevelTexts = load("res://scripts/LevelTexts.gd")
-var LevelTextsInstance = LevelTexts.new()
-var level_texts = LevelTextsInstance.level_texts
 
 var level_state = {
 	'walls': [],
@@ -85,7 +83,7 @@ It returns true if there is a next level, and false otherwise.
 func next_level():
 	""" Returns true if there is a next level, false otherwise """
 	current_level_no += 1
-	if current_level_no >= len(level_texts):
+	if current_level_no >= total_level_count:
 		current_level_no = 0
 		return false
 	return true

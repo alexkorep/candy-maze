@@ -8,7 +8,7 @@ func _ready():
 	for n in GridContainer.get_children(): 
 		GridContainer.remove_child(n) 
 
-	var cnt = len(GameLogic.level_texts)
+	var cnt = GameLogic.total_level_count
 	for i in cnt:
 		# load the button scene
 		var new_level_select_button = load("res://scenes/LevelSelectionButton.tscn").instance()
