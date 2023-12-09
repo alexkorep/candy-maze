@@ -1,5 +1,19 @@
 extends Node
 
+var current_level_no: int = 0
+var level_texts = ["""
+11111111
+1      1
+1  111 11111
+1 x b p1   1
+1 111111   1
+1          1
+1 1111111  1
+1 x  b   b 1
+1   x b x  1
+111111111111
+"""]
+
 var level_state = {
 	'walls': [],
 	'player': { 'current': Vector2.ZERO, 'previous': Vector2.ZERO },

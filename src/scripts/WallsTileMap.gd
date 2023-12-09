@@ -1,17 +1,6 @@
 extends TileMap
 
-var tile_map_text = """
-11111111
-1      1
-1  111 11111
-1 x b p1   1
-1 111111   1
-1          1
-1 1111111  1
-1 x  b   b 1
-1   x b x  1
-111111111111
-"""
+
 
 var wall_tile_id = 0  # The ID of the wall tile in your tileset
 var floor_tile_id = 1  # The ID of the floor tile in your tileset
@@ -22,7 +11,9 @@ onready var tile_map = self  # Assuming you have a TileMap node named "TileMap"
 onready var player = $Player  # Assuming you have a Player node named "Player"
 
 func _ready():
-	load_tile_map_from_text(tile_map_text)
+	var level_no = GameLogic.current_level_no
+	var level_text = GameLogic.level_texts[level_no]
+	load_tile_map_from_text(level_text)
 
 func load_tile_map_from_text(text):
 	tile_map.clear()  # This clears all tiles from the TileMap
