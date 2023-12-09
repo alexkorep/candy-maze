@@ -4,7 +4,7 @@
 [ext_resource path="res://scripts/Main.gd" type="Script" id=2]
 [ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/sprites/background01.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/background05.png" type="Texture" id=5]
 [ext_resource path="res://scenes/Box.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scripts/WallsTileMap.gd" type="Script" id=7]
 
@@ -52,8 +52,8 @@ position = Vector2( 265, 145 )
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+scale = Vector2( 2, 2 )
 motion_scale = Vector2( 0.1, 0.1 )
-motion_mirroring = Vector2( 1024, 1024 )
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2( 13, 3 )
