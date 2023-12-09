@@ -76,6 +76,10 @@ func move(direction):
 				box['previous'] = box['current']
 				box['current'] += direction
 
+"""
+This function is called every physics frame.
+It updates the move timer and the previous positions of the player and boxes.
+"""
 func on_physics_process(delta):
 	if level_state.move_timer < move_duration:
 		level_state.move_timer += delta
@@ -84,6 +88,11 @@ func on_physics_process(delta):
 		for box in level_state.boxes:
 			box.previous = box.current
 
+"""
+This function checks if the level is complete.
+It returns false if the player is still moving or if any box is not on a target.
+Otherwise, it returns true.
+"""
 func is_level_complete():
 	if level_state.move_timer < move_duration:
 		# Wait until the player has finished moving
@@ -94,6 +103,10 @@ func is_level_complete():
 			return false
 	return true
 
+"""
+This function advances to the next level.
+It returns true if there is a next level, and false otherwise.
+"""
 func next_level():
 	""" Returns true if there is a next level, false otherwise """
 	current_level_no += 1
